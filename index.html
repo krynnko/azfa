@@ -24,6 +24,128 @@
         background-position: center;
         background-attachment: fixed;
         color: #fff;
+        min-height: 100vh;
+      }
+
+      .access-gate {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(3, 3, 3, 0.96);
+        backdrop-filter: blur(8px);
+      }
+
+      .access-gate.hidden {
+        display: none;
+      }
+
+      .access-gate-card {
+        width: min(1000px, 100%);
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+        padding: 24px;
+        border-radius: 24px;
+        border: 1px solid rgba(212,160,23,0.3);
+        background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+        box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+      }
+
+      .access-gate-card h2 {
+        color: #f1c24c;
+        margin-bottom: 10px;
+      }
+
+      .access-gate-card p {
+        color: rgba(255,255,255,0.82);
+        line-height: 1.7;
+      }
+
+      .access-gate-card .check-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 16px 0 12px;
+        color: #fff;
+      }
+
+      .access-gate-card button,
+      .access-gate-card input[type="submit"] {
+        padding: 12px 18px;
+        border: none;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #d4af37, #f1c24c);
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .auth-panel {
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(0,0,0,0.22);
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .auth-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .auth-tabs button {
+        background: transparent;
+        color: #f1c24c;
+        border: 1px solid rgba(212,160,23,0.2);
+        border-radius: 999px;
+        padding: 8px 12px;
+      }
+
+      .auth-tabs button.active {
+        background: rgba(212,160,23,0.15);
+      }
+
+      .auth-form {
+        display: none;
+      }
+
+      .auth-form.active {
+        display: block;
+      }
+
+      .auth-form input {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.06);
+        color: #fff;
+      }
+
+      .auth-message {
+        min-height: 20px;
+        margin-top: 10px;
+        color: #f1c24c;
+        font-size: 0.95rem;
+      }
+
+      .site-content {
+        display: none;
+      }
+
+      .site-content.visible {
+        display: block;
+      }
+
+      .user-badge {
+        color: #f1c24c;
+        font-size: 0.95rem;
+        margin-left: 12px;
       }
 
       header {
@@ -174,7 +296,7 @@
       }
 
       .showcase-media::after {
-        content: "Nettoyage professionnel en action";
+        content: "Nettoyage professionnel";
         position: absolute;
         bottom: 15px;
         left: 15px;
@@ -624,7 +746,46 @@
     </style>
   </head>
   <body>
-    <header>
+    <div id="accessGate" class="access-gate">
+      <div class="access-gate-card">
+        <div>
+          <h2>Accès rapide à NS Auto Detailing</h2>
+          <p>Vous pouvez entrer directement sur le site sans créer de compte. Une simple vérification humaine suffit pour continuer.</p>
+          <p style="margin-top:10px;font-size:0.95rem;color:#f1c24c;">Vos données sont stockées localement et protégées : le mot de passe n’est pas affiché et n’est pas conservé en clair.</p>
+          <p style="margin-top:10px;font-size:0.95rem;color:#f1c24c;">Accès direct à votre espace entreprise, sans besoin de compte externe.</p>
+          <label class="check-row">
+            <input type="checkbox" id="humanCheck" />
+            <span>Je suis un humain</span>
+          </label>
+          <button id="enterSiteBtn" type="button">Entrer sur le site</button>
+          <p class="auth-message" id="accessMessage"></p>
+        </div>
+
+        <div class="auth-panel">
+          <div class="auth-tabs">
+            <button type="button" class="active" data-auth-tab="login">Connexion</button>
+            <button type="button" data-auth-tab="signup">Inscription</button>
+          </div>
+
+          <form id="loginForm" class="auth-form active">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <input type="password" id="loginPassword" placeholder="Mot de passe" required />
+            <input type="submit" value="Se connecter" />
+          </form>
+
+          <form id="signupForm" class="auth-form">
+            <input type="text" id="signupName" placeholder="Nom / prénom" required />
+            <input type="email" id="signupEmail" placeholder="Email" required />
+            <input type="password" id="signupPassword" placeholder="Mot de passe" required />
+            <input type="submit" value="Créer un compte" />
+          </form>
+          <p class="auth-message" id="authMessage"></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="siteContent" class="site-content">
+      <header>
       <a href="#" class="logo">
         <img src="logo-ns.png" alt="Logo NS Auto Detailing" class="brand-logo" />
         <h2>NS Auto Detailing</h2>
@@ -636,6 +797,7 @@
         <a href="#tarifs">Tarifs</a>
         <a href="#contact">Contact</a>
       </nav>
+      <div id="userBadge" class="user-badge">Accès rapide</div>
     </header>
 
     <section class="hero">
@@ -672,7 +834,7 @@
       <div class="stats-grid">
         <div class="stat-card"><strong>100%</strong><span>soin manuel</span></div>
         <div class="stat-card"><strong>24h</strong><span>réponse rapide</span></div>
-        <div class="stat-card"><strong>7j/7</strong><span>disponible</span></div>
+        <div class="stat-card"><strong>Sur place</strong><span>intervention à domicile</span></div>
         <div class="stat-card"><strong>Zone</strong><span>Monts, Artannes, Pont-de-Ruan, Thilouze</span></div>
       </div>
     </section>
@@ -883,5 +1045,134 @@
     <footer>
       <p>© 2026 NS Auto Detailing - Tous droits réservés.</p>
     </footer>
+    </div>
+
+    <script>
+      const accessGate = document.getElementById('accessGate');
+      const siteContent = document.getElementById('siteContent');
+      const enterSiteBtn = document.getElementById('enterSiteBtn');
+      const humanCheck = document.getElementById('humanCheck');
+      const accessMessage = document.getElementById('accessMessage');
+      const authMessage = document.getElementById('authMessage');
+      const userBadge = document.getElementById('userBadge');
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const tabButtons = document.querySelectorAll('[data-auth-tab]');
+
+      async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hashBuffer)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+      }
+
+      function getUsers() {
+        try {
+          return JSON.parse(localStorage.getItem('nsUsers')) || [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveUsers(users) {
+        localStorage.setItem('nsUsers', JSON.stringify(users));
+      }
+
+      function setUserBadge(name) {
+        if (name) {
+          userBadge.textContent = `Connecté : ${name}`;
+        } else {
+          userBadge.textContent = 'Accès rapide';
+        }
+      }
+
+      function showSite() {
+        accessGate.classList.add('hidden');
+        siteContent.classList.add('visible');
+      }
+
+      function showAuthFeedback(message, isError = false) {
+        authMessage.textContent = message;
+        authMessage.style.color = isError ? '#ffb4b4' : '#f1c24c';
+      }
+
+      function showAccessFeedback(message, isError = false) {
+        accessMessage.textContent = message;
+        accessMessage.style.color = isError ? '#ffb4b4' : '#f1c24c';
+      }
+
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+          const target = button.getAttribute('data-auth-tab');
+          loginForm.classList.toggle('active', target === 'login');
+          signupForm.classList.toggle('active', target === 'signup');
+        });
+      });
+
+      enterSiteBtn.addEventListener('click', () => {
+        if (!humanCheck.checked) {
+          showAccessFeedback('Veuillez cocher la case “Je suis un humain” pour continuer.', true);
+          return;
+        }
+        localStorage.setItem('nsAccessGranted', 'true');
+        sessionStorage.setItem('nsAccessGranted', 'true');
+        showSite();
+      });
+
+      signupForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const name = document.getElementById('signupName').value.trim();
+        const email = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const users = getUsers();
+
+        if (users.some((user) => user.email.toLowerCase() === email.toLowerCase())) {
+          showAuthFeedback('Cet email est déjà utilisé.', true);
+          return;
+        }
+
+        const passwordHash = await hashPassword(password);
+        users.push({ name, email, passwordHash });
+        saveUsers(users);
+        localStorage.setItem('nsLoggedUser', JSON.stringify({ name, email }));
+        localStorage.setItem('nsAccessGranted', 'true');
+        sessionStorage.setItem('nsAccessGranted', 'true');
+        setUserBadge(name);
+        showAuthFeedback('Compte créé avec succès. Vous pouvez continuer.');
+        showSite();
+      });
+
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const users = getUsers();
+        const passwordHash = await hashPassword(password);
+        const user = users.find((item) => item.email.toLowerCase() === email.toLowerCase() && item.passwordHash === passwordHash);
+
+        if (!user) {
+          showAuthFeedback('Email ou mot de passe incorrect.', true);
+          return;
+        }
+
+        localStorage.setItem('nsLoggedUser', JSON.stringify({ name: user.name, email: user.email }));
+        localStorage.setItem('nsAccessGranted', 'true');
+        sessionStorage.setItem('nsAccessGranted', 'true');
+        setUserBadge(user.name);
+        showAuthFeedback('Connexion réussie.');
+        showSite();
+      });
+
+      const loggedUser = JSON.parse(localStorage.getItem('nsLoggedUser') || 'null');
+      if (loggedUser) {
+        setUserBadge(loggedUser.name);
+      }
+
+      if (localStorage.getItem('nsAccessGranted') === 'true' || sessionStorage.getItem('nsAccessGranted') === 'true') {
+        showSite();
+      }
+    </script>
   </body>
 </html>
