@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b0b"/>
+      <stop offset="45%" stop-color="#1b1b1b"/>
+      <stop offset="100%" stop-color="#3a2510"/>
+    </linearGradient>
+    <linearGradient id="car" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f2c04a"/>
+      <stop offset="50%" stop-color="#b88816"/>
+      <stop offset="100%" stop-color="#7f4c06"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <rect x="0" y="0" width="1600" height="900" fill="rgba(255,255,255,0.04)" />
+  <circle cx="1320" cy="220" r="180" fill="rgba(242,192,74,0.18)"/>
+  <path d="M120 700 C360 560, 640 520, 900 590 C1120 650, 1320 670, 1520 590 L1600 900 L0 900 Z" fill="rgba(255,255,255,0.06)"/>
+
+  <g transform="translate(260 300)">
+    <rect x="110" y="180" width="540" height="170" rx="90" fill="url(#car)" stroke="#fce7a6" stroke-width="10"/>
+    <rect x="180" y="120" width="360" height="110" rx="55" fill="#0f0f10" stroke="#fce7a6" stroke-width="8"/>
+    <rect x="230" y="140" width="120" height="72" rx="18" fill="#111"/>
+    <rect x="390" y="140" width="90" height="72" rx="18" fill="#111"/>
+    <circle cx="320" cy="360" r="72" fill="#0d0d0d" stroke="#f7d36d" stroke-width="10"/>
+    <circle cx="600" cy="360" r="72" fill="#0d0d0d" stroke="#f7d36d" stroke-width="10"/>
+    <circle cx="320" cy="360" r="28" fill="#f2c04a"/>
+    <circle cx="600" cy="360" r="28" fill="#f2c04a"/>
+    <rect x="150" y="190" width="90" height="34" rx="12" fill="#111"/>
+    <rect x="620" y="210" width="70" height="44" rx="16" fill="#111"/>
+  </g>
+
+  <g transform="translate(140 90)">
+    <rect x="0" y="0" width="640" height="140" rx="24" fill="rgba(0,0,0,0.35)" stroke="rgba(242,192,74,0.4)" stroke-width="2"/>
+    <text x="70" y="74" font-family="Arial, sans-serif" font-size="54" font-weight="700" fill="#f2c04a">NS Auto Detailing</text>
+    <text x="70" y="110" font-family="Arial, sans-serif" font-size="24" fill="#fce7a6">Nettoyage intérieur &amp; extérieur premium</text>
+  </g>
+</svg>
